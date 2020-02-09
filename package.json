@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc && node dist/index.js",
-    "test-extract": "tsc && node dist/test-extract.js",
-    "compile": "tsc && node dist/compile.js",
+    "test-extract": "tsc && node -r source-map-support/register dist/test-extract.js",
+    "compile": "tsc && node -r source-map-support/register dist/compile.js",
     "tsc": "tsc",
     "test": "test"
   },
@@ -20,6 +20,7 @@
   "devDependencies": {
     "browserify": "16.5.0",
     "glob": "^7.1.6",
+    "source-map-support": "^0.5.16",
     "uglify-js": "3.7.6"
   }
 }
