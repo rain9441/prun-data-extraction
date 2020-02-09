@@ -2,7 +2,7 @@ import { Addressable, AddressableLine } from './addressable';
 import { AmountOfCurrency, Broker, BrokerMaterial, ComEx, ComExOrder, Exchange, Order, Trader } from './comex';
 import { Data, DataPlanet, DataPlanetResource, System, SystemPlanet } from './data';
 import { Maps, MapEdge, MapEdgePoint, MapStar, MapSector, MapSubSector } from './maps';
-import { Materials, Material, MaterialCategory } from './materials';
+import { Material, Materials, MaterialBuildingRecipe, MaterialCategory, MaterialData, MaterialInputOutputRecipe } from './materials';
 import { Building, BuildingInputOutput, BuildingRecipe, BuildingWorkforce, Production } from './production';
 import { Ship } from './ship';
 import { Inventory, StorageStore } from './storage-store';

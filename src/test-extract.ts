@@ -1,4 +1,4 @@
-import { PriceExtractor } from './extractors/price-extractor'
+import { BuildingExtractor } from './extractors/building-extractor'
 import { TestHarness } from './test-harness'
 
 class TestExtract {
@@ -7,9 +7,9 @@ class TestExtract {
 
     async Run() {
         try {
-            console.log('Running test on price extractor');
+            console.log('Running test on building extractor');
             var testHarness = new TestHarness();
-            testHarness.Run(PriceExtractor);
+            testHarness.Run(BuildingExtractor);
         } catch (e) {
             console.error('Exception occurred', e);
         }

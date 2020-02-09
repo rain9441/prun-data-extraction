@@ -97,6 +97,61 @@ class BuildingExtractor implements BaseExtractor {
             })
             .reduce((obj, x) => obj.concat(x), []);
 
+//        var moreRecipes = Object.keys(state.materials.materialData.data)
+//            .map(key => state.materials.materialData.data[key])
+//            .map(materialData => {
+//                return materialData.outputRecipes
+//                    .filter(outputRecipe => outputRecipe.inputs.length === 0 && outputRecipe.outputs.length > 0)
+//                    .map(outputRecipe => {
+//                        var buildingTicker = state.production.reactorData.results[outputRecipe.reactorId];
+//                        return outputRecipe.outputs.map(output => {
+//                            return { 
+//                                key: `${buildingTicker}-${outputRecipe.outputs[0].material.ticker}`,
+//                                material: output.material.ticker,
+//                                amount: output.amount,
+//                            };
+//                        });
+//                    })
+//            })
+//            .reduce((obj, x) => obj.concat(x), [])
+//            .reduce((obj, x) => obj.concat(x), []);
+
+        var moreRecipeData = Object.keys(state.materials.materialData.data)
+            .map(key => state.materials.materialData.data[key])
+            .map(materialData => {
+                return materialData.outputRecipes
+                    .filter(outputRecipe => outputRecipe.inputs.length === 0 && outputRecipe.outputs.length > 0)
+                    .map(outputRecipe => {
+                        var buildingTicker = state.production.reactorData.results[outputRecipe.reactorId];
+                        return { buildingTicker, outputRecipe };
+                    })
+            })
+            .reduce((obj, x) => obj.concat(x), []);
+
+        var moreRecipes = moreRecipeData
+            .map(recipeData => {
+                return recipeData.outputRecipe.outputs.map(output => {
+                    return { 
+                        key: `${recipeData.buildingTicker}-${recipeData.outputRecipe.outputs[0].material.ticker}`,
+                        building: recipeData.buildingTicker,
+                        duration: recipeData.outputRecipe.duration.millis / 1000,
+                    };
+                });
+            })
+            .reduce((obj, x) => obj.concat(x), []);
+
+        var moreRecipeOutputs = moreRecipeData
+            .map(recipeData => {
+                return recipeData.outputRecipe.outputs.map(output => {
+                    return { 
+                        key: `${recipeData.buildingTicker}-${recipeData.outputRecipe.outputs[0].material.ticker}`,
+                        material: output.material.ticker,
+                        amount: output.amount,
+                    };
+                });
+            })
+            .reduce((obj, x) => obj.concat(x), []);
+
         return {
             dataVersion: 'BUILDINGS-001',
             userInfo: {
@@ -107,9 +162,10 @@ class BuildingExtractor implements BaseExtractor {
             buildings,
             buildingCosts,
             buildingWorkforce,
-            buildingRecipes,
+            buildingRecipes: buildingRecipes.concat(moreRecipes),
             recipeInputs,
-            recipeOutputs,
+            recipeOutputs: recipeOutputs.concat(moreRecipeOutputs),
+            moreRecipes,
             materials,
         };
     }
