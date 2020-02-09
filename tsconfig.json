@@ -7,8 +7,8 @@
 
     },
     "files": [
-		"src/test-extract.ts",
-		"src/compile.ts"
+        "src/test-extract.ts",
+        "src/compile.ts"
     ],
     "include": [
         "src/**/*.ts"

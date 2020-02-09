@@ -1,9 +1,9 @@
 interface User {
-	data: any,
-	fetchActionId: any,
-	fetchStatus: number,
-	userQueryResults: any,
-	liquidation: any,
+    data: any,
+    fetchActionId: any,
+    fetchStatus: number,
+    userQueryResults: any,
+    liquidation: any,
 }
 
 export { User }
