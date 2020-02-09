@@ -1,17 +1,73 @@
+import { Addressable } from './addressable';
+
+interface AmountOfCurrency {
+    amount: number,
+    currency: string,
+}
+interface AskOrBid {
+    price: { amount: number, currency: string },
+    amount: number,
+}
+
 interface Broker {
-    brokers: any,
+    brokers: { [materialExchangeId: string]: { data: BrokerMaterial, isFetching: boolean } },
     pricesByBrokerId: any,
+}
+
+interface BrokerMaterial {
+    id: string,
+    ticker: string,
+    exchange: any,
+    address: Addressable,
+    currency: any,
+    material: any,
+    previous: AmountOfCurrency,
+    price: AmountOfCurrency,
+    priceTime: any,
+    high: AmountOfCurrency,
+    allTimeHigh: AmountOfCurrency,
+    low: AmountOfCurrency,
+    allTimeLow: any,
+    ask: AskOrBid,
+    bid: AskOrBid,
+    supply: number,
+    demand: number,
+    traded: number,
+    volume: AmountOfCurrency,
+    priceAverage: AmountOfCurrency,
+    narrowPriceBand: { low: number, high: number },
+    widePriceBand: { low: number, high: number },
+    sellingOrders: Array<ComExOrder>,
+    buyingOrders: Array<ComExOrder>
 }
 
 interface ComEx {
     broker: Broker,
-    exchange: Exchange,
+    exchange: {
+        exchanges: {
+            requests: any,
+            results: any,
+            data: { [id: string]: Exchange },
+        },
+        brokerLists: any,
+    },
     trader: Trader
 }
 
+interface ComExOrder {
+    id: string,
+    trader: any,
+    amount: number,
+    limit: AmountOfCurrency,
+}
+
 interface Exchange {
-    exchanges: any,
-    brokerLists: any,
+    id: string,
+    name: string,
+    code: string,
+    operator: any,
+    currency: any,
+    address: Addressable,
 }
 
 interface Order {
@@ -39,5 +95,5 @@ interface Trader {
     },
 }
 
-export { Broker, ComEx, Exchange, Order, Trader }
+export { AmountOfCurrency, Broker, BrokerMaterial, ComEx, ComExOrder, Exchange, Order, Trader }
 

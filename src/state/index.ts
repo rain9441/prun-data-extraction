@@ -1,5 +1,5 @@
 import { Addressable, AddressableLine } from './addressable';
-import { Broker, ComEx, Exchange, Order, Trader } from './comex';
+import { AmountOfCurrency, Broker, BrokerMaterial, ComEx, ComExOrder, Exchange, Order, Trader } from './comex';
 import { Data, DataPlanet, DataPlanetResource, System, SystemPlanet } from './data';
 import { Maps, MapEdge, MapEdgePoint, MapStar, MapSector, MapSubSector } from './maps';
 import { Materials, Material, MaterialCategory } from './materials';
@@ -52,14 +52,17 @@ interface State
 }
 
 export {
+    AmountOfCurrency,
     Addressable,
     AddressableLine,
     Broker,
+    BrokerMaterial,
     Building,
     BuildingInputOutput,
     BuildingRecipe,
     BuildingWorkforce,
     ComEx,
+    ComExOrder,
     Data,
     Exchange,
     Inventory,
