@@ -57,10 +57,12 @@ class StorageExtractor implements BaseExtractor {
                     name,
                     naturalId,
                     type: x.type,
-                    inventory: x.inventory.map(inv => ({
-                        amount: inv.amount,
-                        ticker: inv.material.ticker
-                    }))
+                    inventory: x.items
+                        .filter(inv => inv.type.toUpperCase() != "BLOCKED" && inv.type.toUpperCase() != "SHIPMENT")
+                        .map(inv => ({
+                            amount: inv.quantity.amount,
+                            ticker: inv.quantity.material.ticker
+                        }))
                 };
             });
         return storage;
