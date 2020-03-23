@@ -7,7 +7,6 @@ class TestHarness {
     }
 
     Run(e: {new(): BaseExtractor; }) {
-
         glob("test-data/**/*.json", {}, (er, dataFiles) => {
             dataFiles
                 .map(dataFile => ({ dataFile, obj: JSON.parse(fs.readFileSync(dataFile).toString()) }))

@@ -1,6 +1,7 @@
 import { BaseExtractor } from './base-extractor';
 import { MaterialDataProvider } from './data-providers/material-dp';
 import { State, Material } from '../state/';
+import '../helpers';
 
 class PlanetExtractor implements BaseExtractor {
     private materials: { [materialId: string]: Material };
@@ -26,6 +27,16 @@ class PlanetExtractor implements BaseExtractor {
             }
         });
 
+        var starsById = stars.toDictionary(star => star.systemId);
+        var edgeData = state.maps.universe.data.edges
+            .map(edge => {
+
+                var l = starsById[edge.left.systemId].naturalId;
+                var r = starsById[edge.right.systemId].naturalId;
+
+                return { l, r };
+            });
+
         return {
             dataVersion: 'PLANETS-001',
             userInfo: {
@@ -34,6 +45,7 @@ class PlanetExtractor implements BaseExtractor {
                 userId: state.user.data.id,
             },
             systems: explorationData,
+            edges: edgeData,
         };
     }
 
@@ -103,7 +115,7 @@ class PlanetExtractor implements BaseExtractor {
                     }),
                 };
             })
-            .reduce((obj, system) => Object.assign(obj, { [system.id]: system }), {})
+            .toDictionary(system => system.id)
 
         return systems;
 

@@ -3,11 +3,12 @@ import { AmountOfCurrency, Broker, BrokerMaterial, ComEx, ComExOrder, Exchange, 
 import { Data, DataPlanet, DataPlanetResource, System, SystemPlanet } from './data';
 import { Maps, MapEdge, MapEdgePoint, MapStar, MapSector, MapSubSector } from './maps';
 import { Material, Materials, MaterialBuildingRecipe, MaterialCategory, MaterialData, MaterialInputOutputRecipe } from './materials';
-import { Building, BuildingInputOutput, BuildingRecipe, BuildingWorkforce, Production } from './production';
+import { Building, BuildingInputOutput, BuildingRecipe, BuildingWorkforce, Production, ProductionLine, ProductionLineInputOutput, ProductionLineOrder } from './production';
 import { Ship } from './ship';
+import { Site, Sites } from './sites';
 import { Inventory, StorageStore } from './storage-store';
 import { User } from './user';
-import { Workforce } from './workforce';
+import { Workforce, WorkforcePopulation } from './workforce';
 
 interface State 
 {
@@ -20,7 +21,7 @@ interface State
     user: any,
     materials: Materials,
     localrules: any,
-    sites: any,
+    sites: Sites,
     fleet: { ships: { requests: any, results: any, data: { [id: string]: Ship } } },
     game: any,
     objects: any,
@@ -77,10 +78,15 @@ export {
     MaterialCategory,
     Order,
     Production,
+    ProductionLine,
+    ProductionLineInputOutput,
+    ProductionLineOrder,
     Ship,
     State,
     StorageStore,
     System,
     Trader,
     User,
+    Workforce,
+    WorkforcePopulation,
 }

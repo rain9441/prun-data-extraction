@@ -1,3 +1,7 @@
+import { Addressable } from './addressable';
+import { Material } from './materials';
+import { TimeStamp } from './common';
+
 interface Building {
     id: string,
     name: string,
@@ -33,7 +37,11 @@ interface BuildingWorkforce {
 }
 
 interface Production {
-    lines: any,
+    lines: {
+        requests: any,
+        results: any,
+        data: { [id: string]: ProductionLine },
+    },
     all: any,
     bySiteId: any,
     reactorData: {
@@ -43,11 +51,55 @@ interface Production {
     },
 }
 
+interface ProductionLine {
+    id: string,
+    siteId: string,
+    address: Addressable,
+    type: string,
+    capacity: number,
+    slots: number,
+    efficiency: number,
+    condition: number,
+    workforces: Array<any>,
+    orders: Array<ProductionLineOrder>,
+    productionTemplates: Array<any>,
+    efficiencyFactors: Array<any>,
+}
+
+interface ProductionLineInputOutput {
+    value: {
+        amount: number,
+        currency: string,
+    },
+    material: Material,
+    amount: number,
+
+}
+
+interface ProductionLineOrder {
+    id: string,
+    productionLineId: string,
+    inputs: Array<ProductionLineInputOutput>,
+    outputs: Array<ProductionLineInputOutput>,
+    created: TimeStamp,
+    started: TimeStamp,
+    completion: TimeStamp,
+    duration: TimeStamp,
+    lastUpdated: TimeStamp,
+    completed: number,
+    halted: boolean,
+    productionFee: any,
+    productionFeeCollector: any,
+}
+
 export {
     Building,
     BuildingInputOutput,
     BuildingRecipe,
     BuildingWorkforce,
     Production,
+    ProductionLine,
+    ProductionLineInputOutput,
+    ProductionLineOrder,
 }
 

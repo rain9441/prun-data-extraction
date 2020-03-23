@@ -11,6 +11,7 @@ class BuildingExtractor implements BaseExtractor {
             .map(building => {
                 return {
                     ticker: building.ticker,
+                    name: building.name,
                     area: building.areaCost,
                     expertise: building.expertise
                 }
@@ -27,7 +28,8 @@ class BuildingExtractor implements BaseExtractor {
                         amount: cost.amount,
                     };
                 })
-            }).reduce((obj, x) => obj.concat(x), []);
+            })
+            .flatten();
 
         var buildingWorkforce = Object.keys(state.production.reactorData.data)
             .map(key => state.production.reactorData.data[key])
@@ -40,7 +42,8 @@ class BuildingExtractor implements BaseExtractor {
                         capacity: workforce.capacity,
                     };
                 })
-            }).reduce((obj, x) => obj.concat(x), []);
+            })
+            .flatten();
 
         var uniqueBuildingInfo = Object.keys(state.production.reactorData.data)
             .map(key => state.production.reactorData.data[key])
@@ -74,7 +77,8 @@ class BuildingExtractor implements BaseExtractor {
                 }
 
                 return recipeSet;
-            }).reduce((obj, x) => obj.concat(x), []);
+            })
+            .flatten();
 
         var buildingRecipes = normalizedRecipeInfo
             .map(recipeInfo => {
@@ -121,7 +125,7 @@ class BuildingExtractor implements BaseExtractor {
                     };
                 })
             })
-            .reduce((obj, x) => obj.concat(x), []);
+            .flatten();
 
         var moreRecipeData = Object.keys(state.materials.materialData.data)
             .map(key => state.materials.materialData.data[key])
@@ -133,7 +137,7 @@ class BuildingExtractor implements BaseExtractor {
                         return { buildingTicker, outputRecipe };
                     })
             })
-            .reduce((obj, x) => obj.concat(x), []);
+            .flatten();
 
         var moreRecipes = moreRecipeData
             .map(recipeData => {
@@ -145,7 +149,7 @@ class BuildingExtractor implements BaseExtractor {
                     };
                 });
             })
-            .reduce((obj, x) => obj.concat(x), []);
+            .flatten();
 
         var moreRecipeOutputs = moreRecipeData
             .map(recipeData => {
@@ -157,10 +161,10 @@ class BuildingExtractor implements BaseExtractor {
                     };
                 });
             })
-            .reduce((obj, x) => obj.concat(x), []);
+            .flatten();
 
         return {
-            dataVersion: 'BUILDINGS-001',
+            dataVersion: 'BUILDINGS-002',
             userInfo: {
                 username: state.user.data.username,
                 companyId: state.user.data.companyId,
