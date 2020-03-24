@@ -36,6 +36,7 @@ class StorageExtractor implements BaseExtractor {
                     companyId: data.user.data.companyId,
                     userId: data.user.data.id,
                 },
+                liquid: this.parseLiquid(data),
                 trades: this.parseTrades(data),
                 ships: this.parseNonColonyStorage(data),
             },
@@ -46,6 +47,41 @@ class StorageExtractor implements BaseExtractor {
             tradesAndColonies.push({});
         }
         return tradesAndColonies;
+    }
+
+    private parseLiquid(data: State): any {
+        var cxBuys = Object.keys(data.comex.trader.orders.data.data)
+            .map(key => data.comex.trader.orders.data.data[key])
+            // Only sell orders, not buy orders
+            .filter(x => x.type.toUpperCase() == "BUYING")
+            .map(x => {
+                return {
+                    naturalId: `CX.${x.exchange.code}`,
+                    name: x.exchange.name,
+                    bid: {
+                        quantity: x.amount,
+                        amount: x.limit.amount,
+                    },
+                    currency: x.limit.currency,
+                    amount: x.amount * x.limit.amount,
+                    ticker: x.material.ticker,
+                };
+            });
+
+        var currency = Object.keys(data.finance.cash.balances)
+            .map(key => data.finance.cash.balances[key])
+            .filter(balance => balance.amount > 0)
+            .map(balance => {
+                return {
+                    naturalId: `WALLET.${balance.currency}`,
+                    amount: balance.amount,
+                    currency: balance.currency,
+                };
+            });
+        return {
+            cxBuys,
+            currency
+        };
     }
 
     private parseNonColonyStorage(data: State): any {
