@@ -18,7 +18,7 @@ interface State
     auth: any,
     experts: any,
     data: Data,
-    user: any,
+    user: User,
     materials: Materials,
     localrules: any,
     sites: Sites,

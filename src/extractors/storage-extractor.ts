@@ -21,9 +21,9 @@ class StorageExtractor implements BaseExtractor {
                 return {
                     dataVersion: 'STORAGE-003-COLONY',
                     userInfo: {
-                        username: data.user.data.username,
-                        companyId: data.user.data.companyId,
-                        userId: data.user.data.id,
+                        username: data.user.user.data.username,
+                        companyId: data.user.user.data.companyId,
+                        userId: data.user.user.data.id,
                     },
                     colony,
                 };
@@ -32,9 +32,9 @@ class StorageExtractor implements BaseExtractor {
         var tradesAndColonies = [{
                 dataVersion: 'STORAGE-003-TRADES',
                 userInfo: {
-                    username: data.user.data.username,
-                    companyId: data.user.data.companyId,
-                    userId: data.user.data.id,
+                    username: data.user.user.data.username,
+                    companyId: data.user.user.data.companyId,
+                    userId: data.user.user.data.id,
                 },
                 liquid: this.parseLiquid(data),
                 trades: this.parseTrades(data),

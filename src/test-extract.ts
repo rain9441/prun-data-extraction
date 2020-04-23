@@ -1,6 +1,7 @@
 import { PlanetExtractor } from './extractors/planet-extractor'
 import { BuildingExtractor } from './extractors/building-extractor'
 import { StorageExtractor } from './extractors/storage-extractor'
+import { PriceExtractor } from './extractors/price-extractor'
 import { TestHarness } from './test-harness'
 
 class TestExtract {
@@ -12,6 +13,7 @@ class TestExtract {
             PlanetExtractor,
             BuildingExtractor,
             StorageExtractor,
+            PriceExtractor,
         ];
 
         for (var test of tests) {

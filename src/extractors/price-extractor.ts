@@ -63,9 +63,9 @@ class PriceExtractor implements BaseExtractor {
         return {
             dataVersion: 'PRICES-001',
             userInfo: {
-                username: state.user.data.username,
-                companyId: state.user.data.companyId,
-                userId: state.user.data.id,
+                username: state.user.user.data.username,
+                companyId: state.user.user.data.companyId,
+                userId: state.user.user.data.id,
             },
             exchanges,
             materialPrices: Object.values(materialPricesByTicker)
