@@ -54,6 +54,7 @@ class StorageExtractor implements BaseExtractor {
             .map(key => data.comex.trader.orders.data.data[key])
             // Only sell orders, not buy orders
             .filter(x => x.type.toUpperCase() == "BUYING")
+            .filter(x => x.amount > 0)
             .map(x => {
                 return {
                     naturalId: `CX.${x.exchange.code}`,
@@ -118,6 +119,7 @@ class StorageExtractor implements BaseExtractor {
             .map(key => data.comex.trader.orders.data.data[key])
             // Only sell orders, not buy orders
             .filter(x => x.type.toUpperCase() == "SELLING")
+            .filter(x => x.amount > 0)
             .map(x => {
                 return {
                     naturalId: `CX.${x.exchange.code}`,
