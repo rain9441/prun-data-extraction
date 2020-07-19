@@ -13,7 +13,8 @@ class AddressableDataProvider {
             .map(key => ({key, addressable: data.address.addressable[key]}))
             .filter(kvp => !!kvp.addressable)
             .map(kvp => {
-                var lastLine = kvp.addressable.lines[kvp.addressable.lines.length - 1];
+                var lines = kvp.addressable.lines.filter(x => x.type === 'SYSTEM' || x.type === 'PLANET')
+                var lastLine = lines[lines.length - 1];
                 return {
                     id: kvp.key,
                     type: lastLine.type,
