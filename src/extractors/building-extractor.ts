@@ -50,7 +50,7 @@ class BuildingExtractor implements BaseExtractor {
             .map(building => {
                 return building.recipes.map(recipe => {
                     return { 
-                        outputTicker: recipe.outputs[0].material.ticker,
+                        outputTicker: recipe.outputs.map(output => output.material.ticker).join('-'),
                         building: building.ticker,
                         duration: recipe.duration.millis / 1000,
                         inputs: recipe.inputs,
@@ -68,12 +68,40 @@ class BuildingExtractor implements BaseExtractor {
             .map(recipeSet => {
                 if (recipeSet.length === 1) {
                     recipeSet.forEach((recipe) => {
-                        recipe.recipeName = `${recipe.building}-${recipe.outputs[0].material.ticker}`;
+                        recipe.recipeName = `${recipe.building}-${recipe.outputTicker}`;
                     });
                 } else {
-                    recipeSet.forEach((recipe, ix) => {
-                        recipe.recipeName = `${recipe.building}-${recipe.outputs[0].material.ticker}-${ix+1}`;
-                    });
+                    // For output combos that have multiple recipes, we need to get unique string of inputs
+                    var recipesGroupedByInputNames = recipeSet.map(recipe => {
+                            var inputNames = recipe
+                                .inputs
+                                .slice()
+                                .sort((left, right) => left.material.ticker.toLowerCase().localeCompare(right.material.ticker.toLowerCase()))
+                                .map(x => x.material.ticker)
+                                .join('-');
+                            return { recipe, inputNames };
+                        }).groupBy(x => x.inputNames)
+
+                    Object.keys(recipesGroupedByInputNames)
+                        .map(key => recipesGroupedByInputNames[key])
+                        .map(group => ({ inputNames: group[0].inputNames, recipes: group.map(x => x.recipe)}))
+                        .forEach(group => {
+                            group
+                                .recipes
+                                .slice()
+                                .sort((left, right) => left.duration - right.duration)
+                                .forEach((recipe,ix) => {
+                                    if (group.recipes.length === 1) {
+                                        recipe.recipeName = `${recipe.building}-${recipe.outputTicker}-${group.inputNames}`;
+                                    } else {
+                                        recipe.recipeName = `${recipe.building}-${recipe.outputTicker}-${group.inputNames}-${ix+1}`;
+                                    }
+                                });
+                        });
+
+                    //.forEach(group => {
+                    //    recipe.recipeName = `${recipe.building}-${recipe.outputTicker}-${inputName}`;
+                    //});
                 }
 
                 return recipeSet;
