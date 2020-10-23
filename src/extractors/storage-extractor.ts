@@ -15,7 +15,7 @@ class StorageExtractor implements BaseExtractor {
         this.addresses = new AddressableDataProvider(data).Addresses;
         this.planets = new PlanetDataProvider(data).Planets;
         this.ships = new ShipDataProvider(data).Ships;
-                
+
         var colonies = this.parseColonies(data)
             .map(colony => {
                 return {
@@ -96,7 +96,7 @@ class StorageExtractor implements BaseExtractor {
                 if (!!this.ships[x.addressableId]) {
                     name = this.ships[x.addressableId].name;
                     naturalId = this.ships[x.addressableId].naturalId;
-                } 
+                }
 
                 return {
                     name,
@@ -288,11 +288,11 @@ class StorageExtractor implements BaseExtractor {
                 naturalId: address.naturalId,
                 name: address.name,
                 workforces: {
-                    p: workforces.pioneers,
-                    s: workforces.settlers,
-                    t: workforces.technicians,
-                    e: workforces.engineers,
-                    c: workforces.scientists,
+                    p: workforces ? workforces.pioneers : 0,
+                    s: workforces ? workforces.settlers : 0,
+                    t: workforces ? workforces.technicians : 0,
+                    e: workforces ? workforces.engineers : 0,
+                    c: workforces ? workforces.scientists : 0,
                 },
                 storage: storage.inventory,
                 buildings: buildings.buildings,
