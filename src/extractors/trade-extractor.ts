@@ -24,7 +24,6 @@ class TradeExtractor implements BaseExtractor {
             .map(x => {
                 return {
                     exchangeCode: x.exchange.code,
-                    name: x.exchange.name,
                     type: x.type,
                     ticker: x.material.ticker,
                     amount: x.amount,
