@@ -2,7 +2,7 @@ export {}
 declare global {
     interface Array<T> {
         flatten() : T,
-        groupBy(func: (x: T) => string): { [key: string]: Array<T> },
+        groupBy(func: (x: T, ix?: number) => string): { [key: string]: Array<T> },
         toDictionary(func: (x: T) => string): { [key: string]: T },
     }
 
@@ -12,9 +12,9 @@ Array.prototype.flatten = function flatten<T>(): T {
     return this.reduce((obj, x) => obj.concat(x), [])
 }
 
-Array.prototype.groupBy = function groupBy<T>(func:(x:T)=>string): { [key: string]: Array<T> } {
-    return this.reduce((obj, acc) => {
-        var key = func(acc);
+Array.prototype.groupBy = function groupBy<T>(func:(x:T, ix?: number)=>string): { [key: string]: Array<T> } {
+    return this.reduce((obj, acc, ix) => {
+        var key = func(acc, ix);
         obj[key] = (obj[key] ?? []).concat([acc]);
         return obj;
     }, {});

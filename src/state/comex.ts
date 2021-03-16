@@ -1,4 +1,5 @@
 import { Addressable } from './addressable';
+import { Material } from './materials';
 
 interface AmountOfCurrency {
     amount: number,
@@ -11,16 +12,22 @@ interface AskOrBid {
 
 interface Broker {
     brokers: { [materialExchangeId: string]: { data: BrokerMaterial, isFetching: boolean } },
-    pricesByBrokerId: any,
+    pricesByBrokerId: { [brokerId: string]: BrokerPrice },
+}
+
+interface BrokerExchange {
+    code: string,
+    id: string,
+    name: string,
 }
 
 interface BrokerMaterial {
     id: string,
     ticker: string,
-    exchange: any,
+    exchange: BrokerExchange,
     address: Addressable,
     currency: any,
-    material: any,
+    material: Material,
     previous: AmountOfCurrency,
     price: AmountOfCurrency,
     priceTime: any,
@@ -39,6 +46,20 @@ interface BrokerMaterial {
     widePriceBand: { low: number, high: number },
     sellingOrders: Array<ComExOrder>,
     buyingOrders: Array<ComExOrder>
+}
+
+interface BrokerPrice {
+    from: number,
+    isFetching: boolean,
+    items: Array<BrokerPriceItem>
+}
+
+interface BrokerPriceItem {
+    date: number,
+    open: number,
+    close: number,
+    volume: number, 
+    traded: number,
 }
 
 interface ComEx {

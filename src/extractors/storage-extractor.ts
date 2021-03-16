@@ -198,7 +198,7 @@ class StorageExtractor implements BaseExtractor {
                 var workforceToLocal = (workforce: WorkforcePopulation) => {
                     // minimize the JSON foot print to reduce size of output
                     return {
-                        p: workforce.population,
+                        p: workforce.population == 1 ? 0 : workforce.population,
                         c: workforce.capacity,
                         r: workforce.required,
                         s: workforce.satisfaction
