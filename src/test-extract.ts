@@ -1,5 +1,6 @@
 import { BuildingExtractor } from './extractors/building-extractor'
 import { MarketHistoryExtractor } from './extractors/market-history-extractor'
+import { MaterialValueExtractor} from './extractors/material-value-extractor'
 import { PlanetExtractor } from './extractors/planet-extractor'
 import { PriceExtractor } from './extractors/price-extractor'
 import { StorageExtractor } from './extractors/storage-extractor'
@@ -11,11 +12,12 @@ class TestExtract {
 
     async Run() {
         var tests = [
-            PlanetExtractor,
             BuildingExtractor,
-            StorageExtractor,
+            MarketHistoryExtractor,
+            MaterialValueExtractor,
+            PlanetExtractor,
             PriceExtractor,
-            MarketHistoryExtractor
+            StorageExtractor,
         ];
 
         for (var test of tests) {
